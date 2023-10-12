@@ -1,0 +1,6 @@
+{
+	"name": "tbytes-contracts",
+	"scripts": {
+		"build": "forge build"
+	}
+}
