@@ -15,7 +15,6 @@ const CSS_SECTION: ClassName = 'my-4 h-96 overflow-x-auto'
 
 export async function generateStaticParams() {
   const mockUsers = await getMockUsers()
-  console.log(mockUsers)
   return mockUsers.map((user) => ({
     id: String(user.id),
   }))
