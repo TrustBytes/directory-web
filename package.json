@@ -9,13 +9,9 @@
   "devDependencies": {
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
-    "tsconfig": "*",
+    "tsconfig": "workspace:*",
     "turbo": "latest"
   },
-  "name": "EthGlobalOnline",
-  "packageManager": "npm@9.7.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@8.6.10",
+  "name": "EthGlobalOnline"
 }
