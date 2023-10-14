@@ -1,6 +1,6 @@
 
 import React from 'react'
-import getMockUsers from '../../utils/mock';
+import getMockUsers from '../../_utils/mock';
 
 interface AuditorPageParams  {
   id: string

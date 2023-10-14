@@ -1,5 +1,5 @@
 import Link from "next/link"
-import getMockUsers from "../utils/mock"
+import getMockUsers from "../_utils/mock"
 
 export default async function Auditors(): Promise<JSX.Element>{
   const mockUsers = await getMockUsers()
