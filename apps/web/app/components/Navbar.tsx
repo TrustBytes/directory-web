@@ -3,8 +3,6 @@ import React from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
 
-
-
 const CSS_LINK_LABEL: React.HTMLAttributes<HTMLHeadingElement>['className'] = ' p-4 hover:text-blue-500'
 
 function Navbar(): JSX.Element {
