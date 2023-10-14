@@ -1,8 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Providers from './components/Providers'
-import Navbar from './components/Navbar'
+import Providers from './components/providers'
+import Navbar from './components/navbar'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -16,11 +16,9 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+}): JSX.Element {
 
   return (
-
-
     <html lang="en">
       <body className={inter.className}>
         <Providers>
@@ -30,7 +28,6 @@ export default function RootLayout({
           </main>
         </Providers>
       </body>
-
     </html>
   )
 }

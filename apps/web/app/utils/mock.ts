@@ -1,19 +1,24 @@
-import {promises as fs} from "fs"
+import { promises as fs } from "node:fs"
+
 async function getMockUsers(): Promise<User[]> {
   try {
-    const data = await fs.readFile(process.cwd() + '/app/data/mock-users.json', "utf-8")
-    const dataParsed = JSON.parse(data)
+    const data: string = await fs.readFile(`${process.cwd()}  /app/data/mock-users.json`, "utf-8")
+    const dataParsed: Data = JSON.parse(data) as Data
     return dataParsed.users
   } catch (error) {
-    console.error("Error fetching mock users", error)
     return []
   }
 
 }
 
-type User = {
+interface User {
   id: string,
   username: string,
 }
+
+
+interface Data {
+  users: User[]
+} 
 
 export default getMockUsers

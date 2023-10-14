@@ -8,8 +8,8 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
   polygonMumbai
 } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+
 const { chains, publicClient } = configureChains(
   [polygonMumbai],
   [
@@ -34,7 +34,7 @@ export default function Providers({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): JSX.Element {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
