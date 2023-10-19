@@ -16,9 +16,7 @@ interface C4Auditor {
 
 
 const getC4Auditor = async (handle: string): Promise<Auditor> => {
-	console.log('#getC4Auditor')
 	const decoder = new TextDecoder("utf-8")
-	const profilePageURL = `https://code4rena.com/@${handle}`
 	const url = `https://code4rena.com/api/functions/leaderboard?handle=${handle}`
 	const res = await fetch(url, {
 		headers: {
@@ -59,11 +57,11 @@ const getC4Auditor = async (handle: string): Promise<Auditor> => {
 		gasOptzFindings: c4Auditor.gasOptz 
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 	return auditor
 }
 
 const getManyC4Auditors: () => Promise<Auditor[]> = async () => {
-	console.log('#getManyC4Auditors')
 	const url = `https://code4rena.com/api/functions/leaderboard`
 	const res = await fetch(url)
 
@@ -95,10 +93,11 @@ const getManyC4Auditors: () => Promise<Auditor[]> = async () => {
 			totalFindings: a.allFindings,
 			totalRewards: a.rewardsTotal 
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 		return auditor
 	}) 
-	console.log(auditors)
 	const firstTenAuditors = auditors.slice(0, 40)
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 	return firstTenAuditors
 
 }
