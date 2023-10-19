@@ -1,18 +1,19 @@
 'use client';
 import React from 'react'
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
+import Image from "next/image"
 
-const CSS_LINK_LABEL: React.HTMLAttributes<HTMLHeadingElement>['className'] = ' p-4 hover:text-blue-500'
+const CSS_LINK_LABEL: React.HTMLAttributes<HTMLHeadingElement>['className'] = ' p-4 text-gray-300 hover:text-white'
 
 function Navbar(): JSX.Element {
   return (
-    <nav className="p-4  flex items-center justify-between ">
+    <nav className="p-4 select-none  flex items-center justify-between max-w-screen-2xl w-full mx-auto ">
+      <Link href="/">
+        <Image alt="tb-logo" className="" width={40} height={40} src="/tb-logo.webp" />
+      </Link>
       <ul className='flex space-x-8'>
-        <Link  className={CSS_LINK_LABEL} href="/">Home</Link>
-        <Link  className={CSS_LINK_LABEL} href="/auditors">Auditors</Link>
+        <Link className={CSS_LINK_LABEL} href="/auditors">Auditors</Link>
       </ul>
-      <ConnectButton />
     </nav>
   )
 }

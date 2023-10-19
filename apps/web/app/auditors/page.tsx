@@ -1,18 +1,32 @@
 import Link from "next/link"
-import getMockUsers from "../_utils/mock"
+import Image from "next/image"
+import { getManyC4Auditors } from "../_utils/auditors"
 
-export default async function Auditors(): Promise<JSX.Element>{
-  const mockUsers = await getMockUsers()
+const auditors = getManyC4Auditors().then((auditor) => {
+  return auditor
+})
+
+
+
+export default async function Auditors(): Promise<JSX.Element> {
   return (
-    <main className="flex flex-col m-4 space-y-6  ">
-      <section className=" flex items-center  w-full"><input  className="bg-gray-100 p-2 px-4 rounded-3xl border-b w-96 cursor-not-allowed" disabled placeholder="search by address" type="text" /></section>
-        <h1 className="text-2xl">Results</h1>
-        <hr />
-      <div className="flex gap-4  flex-wrap ">
-        {mockUsers.map((profile) => {
+    <main className="flex flex-col m-4 px-8   ">
+      <input className="mt-12 p-2  bg-transparent text-5xl border-b border-accent outline-none"  placeholder="search auditors" type="text" />
+      <div className="flex gap-16 mt-24  flex-wrap ">
+        {(await auditors).map((auditor) => {
           return (
-            <Link  className="h-48 aspect-video flex bg-blue-500 p-4 cursor-pointer hover:brightness-105 rounded-lg hover:translate-x-1 hover:-translate-y-1 duration-100 ease-out " href={`/auditors/${profile.id}`} key={profile.id}>
-              <span className="text-2xl font-bold text-white">{profile.id}</span>
+            <Link key={auditor.handle} className="h-60 flex flex-col relative hover:brightness-125 relative hover:translate-x-1 hover:-translate-y-1 cursor-pointer  duration-200 ease-out shadow-2xl mx-auto " href={`/auditors/${auditor.handle}`}>
+              <div className="relative rounded-3xl aspect-square h-32 w-32 overflow-hidden mx-auto bg-base z-10 flex items-center justify-center">
+                <Image src={auditor.avatarURL || "/anon.png"} fill={true} alt="avatar img"   className="overflow-hidden object-cover " />
+              </div>
+            <div className="h-52 bg-transparent z-10 items-center justify-center  rounded-3xl text-white aspect-[4/3]   flex-col    flex"  key={auditor.handle}>
+              <div className="z-10 items-center text-bold flex justify-between w-full h-min flex-col space-y-4">
+                <span className="p-1 border-b border-accent">{auditor.handle}</span>
+                <div className=" p-2 px-4 text-sm bg-base rounded-xl">{auditor.totalFindings} Total Findings</div>
+
+              </div>
+            </div>
+              <div className="absolute h-48 w-full bg-dark bottom-0 rounded-3xl"/>
             </Link>
           )
         })}

@@ -1,11 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {  JetBrains_Mono as JetBrainsMono } from 'next/font/google'
 import Providers from './_components/providers'
 import Navbar from './_components/navbar'
 
 
-const inter = Inter({ subsets: ['latin'] })
+
+const jetbrains = JetBrainsMono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'TrustBytes Profiles',
@@ -20,9 +21,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={jetbrains.className}>
         <Providers>
-          <main className="h-screen flex flex-col ">
+          <main className="flex flex-col bg-darker text-white h-screen overflow-y-auto">
             <Navbar />
             {children}
           </main>
