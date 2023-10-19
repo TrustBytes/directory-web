@@ -12,7 +12,7 @@ const auditors = getManyC4Auditors().then((auditor) => {
 export default async function Auditors(): Promise<JSX.Element> {
   return (
     <main className="flex flex-col m-4 px-8   ">
-      <input className="mt-12 p-2  bg-transparent text-5xl border-b border-accent outline-none"  placeholder="search auditors" type="text" />
+      <input className="mt-12 p-2  bg-transparent text-5xl border-b border-accent outline-none"  placeholder="SEARCH AUDITORS" type="text" />
       <div className="flex gap-16 mt-24  flex-wrap ">
         {(await auditors).map((auditor: Auditor) => {
           return (
@@ -23,7 +23,7 @@ export default async function Auditors(): Promise<JSX.Element> {
             <div className="h-52 bg-transparent z-10 items-center justify-center  rounded-3xl text-white aspect-[4/3]   flex-col    flex"  key={auditor.handle}>
               <div className="z-10 items-center text-bold flex justify-between w-full h-min flex-col space-y-4">
                 <span className="p-1 border-b border-accent">{auditor.handle}</span>
-                <div className=" p-2 px-4 text-sm bg-base rounded-xl">{auditor.totalFindings} Total Findings</div>
+                <div className=" p-2 px-4 text-xs bg-base rounded-xl uppercase">{auditor.totalFindings} Total Findings</div>
 
               </div>
             </div>
