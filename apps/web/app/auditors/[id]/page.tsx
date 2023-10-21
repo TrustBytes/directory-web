@@ -41,7 +41,7 @@ const page = async ({ params }: { params: AuditorPageParams }): Promise<JSX.Elem
     <div className='m-8 flex flex-col md:flex-row  gap-8'>
       <div className="w-96">
       <div className=" relative aspect-square rounded-3xl overflow-hidden">
-        <Image src={trustbytesAuditor.avatarURL || c4Auditor.avatarURL || "/anon.png"} fill alt="avatar" className="object-cover" />
+        <Image src={trustbytesAuditor.avatarURL || c4Auditor.image || "/anon.png"} fill alt="avatar" className="object-cover" />
       </div>
       </div>
 

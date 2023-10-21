@@ -36,20 +36,8 @@ const getC4Auditor = async (handle: string): Promise<C4Auditor> => {
 	}
 
 	//@TODO: remove hard coded value
-	const auditor: C4Auditor = {
-		handle: c4Auditor.handle ,
-		avatarURL: c4Auditor.avatarURL ,
-		totalFindings: c4Auditor.totalFindings ,
-		totalRewards: c4Auditor.totalRewards ,
-		availableForHire: c4Auditor.availableForHire ,
-		highRiskFindings: c4Auditor.highRiskFindings ,
-		mediumRiskFindings: c4Auditor.mediumRiskFindings ,
-		lowRiskFindings: c4Auditor.lowRiskFindings ,
-		soloHighRiskFindings:c4Auditor.soloHighRiskFindings ,
-		gasOptzFindings: c4Auditor.gasOptzFindings ,
-	}
 
-	return auditor
+	return c4Auditor
 }
 
 async function getManyC4Auditors(): Promise<C4Auditor[]> {
@@ -74,29 +62,18 @@ async function getManyC4Auditors(): Promise<C4Auditor[]> {
 	}
 
 
-	const c4Auditors: C4Auditor[] = JSON.parse(result)
+	let c4Auditors: C4Auditor[] = JSON.parse(result)
 
-	let payload: C4Auditor[] = []
-
-	 payload = (c4Auditors).map((a) => {
-		const auditor: C4Auditor = {
-			handle: a.handle,
-			avatarURL: a.avatarURL,
-			totalFindings: a.totalFindings,
-			totalRewards: a.totalRewards, 
-		}
-		return auditor
-	}) 
 
 	//sort trust score
-	payload = payload.sort((a, b) => b.totalFindings - a.totalFindings)
+	c4Auditors = c4Auditors.sort((a, b) => b.allFindings - a.allFindings)
 
 
 
 
 	// limit results to be sent
-	 payload = payload.slice(0, 40)
-	return payload
+	 c4Auditors = c4Auditors.slice(0, 40)
+	return c4Auditors
 
 }
 

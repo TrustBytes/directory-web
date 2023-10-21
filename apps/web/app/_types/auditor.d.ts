@@ -1,14 +1,14 @@
 interface C4Auditor {
 	handle: string;
-	avatarURL: string;
-	totalFindings: number;
-	totalRewards: number;
+	image: string;
+	allFindings: number;
+	awardTotal: number;
 	availableForHire?: boolean;
-	highRiskFindings?: number;
-	mediumRiskFindings?: number;
-	lowRiskFindings?: number;
-	soloHighRiskFindings?: number;
-	gasOptzFindings?: number;
+	highRisk?: number;
+	medRisk?: number;
+	lowRisk?: number;
+	soloHigh?: number;
+	gasOptz?: number;
 }
 
 interface TrustbytesAuditor{

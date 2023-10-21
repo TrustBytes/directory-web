@@ -26,11 +26,11 @@ async function getTrustbytesAuditors(): Promise<TrustbytesAuditor[]> {
 			name: a.handle,
 			competencies: [],
 			bio: "",
-			totalFindings: a.totalFindings,
-			trustScore: a.totalFindings / 10,
+			totalFindings: a.allFindings,
+			trustScore: a.allFindings / 10,
 			//@TODO: match c4 profiles with tableland profiles, remove hardcoded isRegistered value
 			isRegistered: false,
-			avatarURL: a.avatarURL,
+			avatarURL: a.image,
 			pageID: `${a.handle}`,
 			C4ID: a.handle,
 		}
