@@ -26,7 +26,7 @@ function Register(): JSX.Element {
     abi: registryArtifact.abi,
     functionName: 'insertIntoTable',
     args: [state.name, state.bio, state.competencies, 0],
-    onSuccess: () => {
+    onSettled: () => {
       // eslint-disable-next-line no-alert -- Dev mode alert
       window.alert('Profile registered!')
     },
