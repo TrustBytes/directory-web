@@ -19,7 +19,7 @@ export default async function Auditors(): Promise<JSX.Element> {
   const trustbytesAuditors = await getTrustbytesAuditors()
 
   return (
-    <main className="flex flex-col m-4 px-8   ">
+    <main className="flex flex-col m-4 md:px-8   ">
       <SearchFilter auditors={trustbytesAuditors} />
 
       <section className="gap-4 flex flex-col border p-4 my-8 mt-16  bg-dark">
@@ -42,7 +42,7 @@ export default async function Auditors(): Promise<JSX.Element> {
       <div className="flex gap-8 mt-24  flex-wrap ">
         {(trustbytesAuditors).map((a: TrustbytesAuditor) => {
           return (
-            <Link key={a.pageID} className="h-64 flex flex-col relative hover:brightness-125 bg-transparent  hover:translate-x-1 hover:-translate-y-1 cursor-pointer  duration-200 ease-out  mx-auto " href={`/auditors/${a.pageID}`}>
+            <Link key={a.pageID} className="h-64 flex flex-col relative hover:brightness-125 bg-transparent  hover:translate-x-1 hover:-translate-y-1 cursor-pointer  duration-200 ease-out  md:mx-auto w-full md:w-fit" href={`/auditors/${a.pageID}`}>
               <div className="w-full flex justify-between">
                 <div className="relative rounded-3xl aspect-square h-28 w-28 overflow-hidden mx-8  bg-base z-10 flex items-center justify-center">
                   <Image src={a.avatarURL || "/anon.png"} fill alt="avatar img" className="overflow-hidden object-cover " />
@@ -52,7 +52,7 @@ export default async function Auditors(): Promise<JSX.Element> {
                   <span className="text-xs p-1 uppercase">trustscore</span>
                 </div>
               </div>
-              <div className="h-72 bg-transparent z-10  justify-center  rounded-3xl text-white md:aspect-[4/3] aspect-[4/3]    flex-col    flex" key={a.address}>
+              <div className="h-72 bg-transparent z-10  justify-center  rounded-3xl text-white md:aspect-[4/3] aspect-[1/1]    flex-col    flex" key={a.address}>
                 <div className="z-10  text-bold flex   justify-between  mx-8      h-min  space-y-4">
                   <div className="flex flex-col items-center space-y-4">
                     <span className="p-1 w-min border-b border-accent">{a.name}</span>

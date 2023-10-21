@@ -15,6 +15,9 @@ function Navbar(): JSX.Element {
         <Link className={CSS_LINK_LABEL} href={{
           pathname: '/auditors',
         }} >Auditors</Link>
+        <Link className={CSS_LINK_LABEL} href={{
+          pathname: '/register',
+        }} >Register</Link>
       </ul>
     </nav>
   )
