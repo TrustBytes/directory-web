@@ -12,7 +12,9 @@ function Navbar(): JSX.Element {
         <Image alt="tb-logo" className="" width={40} height={40} src="/tb-logo.webp" />
       </Link>
       <ul className='flex space-x-8'>
-        <Link className={CSS_LINK_LABEL} href="/auditors">Auditors</Link>
+        <Link className={CSS_LINK_LABEL} href={{
+          pathname: '/auditors',
+        }} >Auditors</Link>
       </ul>
     </nav>
   )

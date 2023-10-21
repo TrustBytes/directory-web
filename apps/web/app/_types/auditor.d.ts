@@ -9,6 +9,13 @@ interface Auditor {
 	lowRiskFindings?: number;
 	soloHighRiskFindings?: number;
 	gasOptzFindings?: number;
+	specialities: string[];
+	trustScore: number;
+
 }
 
-export type { Auditor }
+
+const ALL_SPECIALITES = ['nft', 'dao', 'defi', 'wallet'] as const;
+type Speciality = typeof ALL_SPECIALITES[number];
+
+export type { Auditor, Speciality }

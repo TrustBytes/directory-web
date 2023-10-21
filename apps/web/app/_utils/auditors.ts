@@ -44,6 +44,7 @@ const getC4Auditor = async (handle: string): Promise<Auditor> => {
 	const data: C4Auditor[] = (JSON.parse(result)) 
 	const c4Auditor = data[0]
 
+	//@TODO: remove hard coded value
 	const auditor: Auditor = {
 		handle: c4Auditor.handle ,
 		avatarURL: c4Auditor.image ,
@@ -54,14 +55,17 @@ const getC4Auditor = async (handle: string): Promise<Auditor> => {
 		mediumRiskFindings: c4Auditor.mediumRisk ,
 		lowRiskFindings: c4Auditor.lowRisk ,
 		soloHighRiskFindings:c4Auditor.soloHigh ,
-		gasOptzFindings: c4Auditor.gasOptz 
+		gasOptzFindings: c4Auditor.gasOptz ,
+		specialities: ["defi", "nft"],
+		trustScore: Number(c4Auditor.allFindings / 10) || 0 ,
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 	return auditor
 }
 
-const getManyC4Auditors: () => Promise<Auditor[]> = async () => {
+async function getManyC4Auditors(_params: {specialities: string[], trustScore: string, count?
+	: number}): Promise<Auditor[]> {
 	const url = `https://code4rena.com/api/functions/leaderboard`
 	const res = await fetch(url)
 
@@ -86,19 +90,33 @@ const getManyC4Auditors: () => Promise<Auditor[]> = async () => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- JSON.parse is safe
 	const c4Auditors: C4Auditor[] = JSON.parse(result)
 
-	const auditors: Auditor[] = (c4Auditors).map((a) => {
+	let payload: Auditor[] = []
+
+	 payload = (c4Auditors).map((a) => {
 		const auditor: Auditor = {
 			handle: a.handle,
 			avatarURL: a.image,
 			totalFindings: a.allFindings,
-			totalRewards: a.rewardsTotal 
+			totalRewards: a.rewardsTotal, 
+			trustScore: Number(a.allFindings / 10) || 0 ,
+			specialities: ["defi", "nft"],
+
 		}
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 		return auditor
 	}) 
-	const firstTenAuditors = auditors.slice(0, 40)
+
+	//sort trust score
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- JSON.parse is safe
+	payload = payload.sort((a, b) => b.totalFindings - a.totalFindings)
+
+
+
+
+	// limit results to be sent
+	 payload = payload.slice(0, 40)
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
-	return firstTenAuditors
+	return payload
 
 }
 

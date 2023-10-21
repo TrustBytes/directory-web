@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={jetbrains.className}>
         <Providers>
-          <main className="flex flex-col bg-darker text-white h-screen overflow-y-auto">
+          <main className="flex flex-col bg-gradient-to-bl from-slate-900 via-darker to-darker  text-white h-screen overflow-y-auto">
             <Navbar />
             {children}
           </main>

@@ -15,11 +15,11 @@ type ClassName = React.HTMLAttributes<HTMLHeadingElement>['className']
 
 
 const CSS_SECTION_LABEL: ClassName = 'text-2xl font-bold border-b py-2'
-const CSS_SECTION: ClassName = 'my-4  overflow-x-auto'
+const CSS_SECTION: ClassName = 'my-4  overflow-x-auto '
 const CSS_AUDITOR_OVERVIEW_ITEM: ClassName = 'p-4 text-lg border cursor-pointer hover:brightness-90'
 
-export async function generateStaticParams(): Promise<{id: string}[]> {
-  const manyC4Auditors = await getManyC4Auditors()
+export async function generateStaticParams(): Promise<{ id: string }[]> {
+  const manyC4Auditors = await getManyC4Auditors({ specialities: [], trustScore: "0"})
   const auditorProfiles = manyC4Auditors.map((auditor: Auditor) => {
     return {
       id: auditor.handle,
@@ -34,32 +34,37 @@ const page = async ({ params }: { params: AuditorPageParams }): Promise<JSX.Elem
   const { id } = params;
   const auditor: Auditor = await getC4Auditor(id) as Auditor
   return (
-    <div className='m-4'>
-
-      <section className="w-1/3 relative aspect-video">
+    <div className='m-8 flex flex-col md:flex-row  gap-8'>
+      <div className="w-96">
+      <div className=" relative aspect-square rounded-3xl overflow-hidden">
         <Image src={auditor.avatarURL || "/"} fill alt="avatar" className="object-cover" />
-      </section>
-      <section className={CSS_SECTION}>
+      </div>
+      </div>
 
-        <h1 className={CSS_SECTION_LABEL}>Overview: {id}</h1>
-        <ul className="flex flex-wrap gap-4 my-4">
-          {Object.entries(auditor).map(([key, value]) => {
-            if (!value) return null;
-            return (
-              <div key={key} className={CSS_AUDITOR_OVERVIEW_ITEM}>
-              <span>{key}: </span>
-              <span>{String(value)}</span>
-            </div>
-            )
-          })}
-        </ul>
-      </section>
-      <section className={CSS_SECTION}>
-        <h2 className={CSS_SECTION_LABEL}>Credentials</h2>
-      </section>
-      <section className={CSS_SECTION}>
-        <h2 className={CSS_SECTION_LABEL}>Similar Profiles</h2>
-      </section>
+      <div className="flex flex-col space-y-4 max-w-5xl flex-1">
+
+        <section className={CSS_SECTION}>
+          <h1 className={CSS_SECTION_LABEL}>Auditor Preferences</h1>
+          <ul className="flex flex-wrap gap-4 my-4">
+          </ul>
+        </section>
+
+        <section className={CSS_SECTION}>
+          <h1 className={CSS_SECTION_LABEL}>Known Data</h1>
+          <ul className="flex flex-wrap gap-4 my-4">
+            {Object.entries(auditor).map(([key, value]) => {
+              if (!value) return null;
+              return (
+                <div key={key} className={CSS_AUDITOR_OVERVIEW_ITEM}>
+                  <span>{key}: </span>
+                  <span>{String(value)}</span>
+                </div>
+              )
+            })}
+          </ul>
+        </section>
+
+      </div>
     </div>
   )
 }

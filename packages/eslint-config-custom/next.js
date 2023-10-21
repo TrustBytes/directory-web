@@ -39,5 +39,6 @@ module.exports = {
   rules: {
     "import/no-default-export": "off",
     "react/jsx-sort-props": "off",
+    "@typescript-eslint/consistent-indexed-object-style": "off"
   },
 };
