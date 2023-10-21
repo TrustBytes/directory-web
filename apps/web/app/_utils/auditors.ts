@@ -9,6 +9,9 @@ const getC4Auditor = async (handle: string): Promise<C4Auditor> => {
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json'
+		},
+		next: {
+			revalidate: 300 
 		}
 	})
 
