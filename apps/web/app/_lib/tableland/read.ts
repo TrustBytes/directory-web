@@ -8,7 +8,7 @@ const AUDITOR_TABLE_NAME = "trustbytes_auditors_list_80001_7927";
 //@TODO: double check for run time errors
 async function getAllRegisteredAuditors(): Promise<TablelandAuditor[]> {
 	const { body } = await fetch("https://testnets.tableland.network/api/v1/query?mode=objects&statement=select%20*%20from%20trustbytes_auditors_list_80001_7927", {
-		next: { revalidate: 60 }
+		next: { revalidate: 30 }
 	})
 
 	const decoder = new TextDecoder('utf-8')
