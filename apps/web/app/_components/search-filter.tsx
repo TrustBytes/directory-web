@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import type { getManyC4Auditors } from '../_utils/auditors'
-import type { Speciality, Auditor } from '../_types/auditor'
+import type { Speciality, TrustbytesAuditor } from '../_types/auditor'
+import type { getTrustbytesAuditors } from '../_lib/trustbytes'
 
 interface SearchProps {
-  auditors: Awaited<ReturnType<typeof getManyC4Auditors>>
+  auditors: Awaited<ReturnType<typeof getTrustbytesAuditors>>
 }
 
 
@@ -68,10 +68,10 @@ function SearchFilter(props: SearchProps): JSX.Element {
     <form onSubmit={onFormSubmit} className="flex w-full flex-col space-y-8">
       <input className="mt-12 p-2 flex-grow  bg-transparent md:text-5xl text-lg border-b border-accent outline-none" placeholder="SEARCH AUDITORS" value={inputValue} type="text" name="handle" list="list-auditors" onChange={onSearchInputChange} />
       <datalist id="list-auditors">
-        {props.auditors.map((a: Auditor) => {
+        {props.auditors.map((a: TrustbytesAuditor) => {
           return (
 
-            <option key={a.handle} value={a.handle} />
+            <option key={a.address} value={a.address} />
           )
         })}
       </ datalist>

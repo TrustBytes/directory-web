@@ -1,21 +1,9 @@
 
-import type { Auditor } from '../_types/auditor.ts'
-
-interface C4Auditor {
-	handle: string;
-	image: string;
-	allFindings: number;
-	rewardsTotal: number;
-	availableForHire: boolean;
-	highRisk: number;
-	mediumRisk: number;
-	lowRisk: number;
-	soloHigh: number;
-	gasOptz: number;
-}
+import type { C4Auditor } from '../_types/auditor.ts'
 
 
-const getC4Auditor = async (handle: string): Promise<Auditor> => {
+
+const getC4Auditor = async (handle: string): Promise<C4Auditor> => {
 	const decoder = new TextDecoder("utf-8")
 	const url = `https://code4rena.com/api/functions/leaderboard?handle=${handle}`
 	const res = await fetch(url, {
@@ -40,32 +28,31 @@ const getC4Auditor = async (handle: string): Promise<Auditor> => {
 		result += decoder.decode(value)
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- JSON.parse is safe
 	const data: C4Auditor[] = (JSON.parse(result)) 
-	const c4Auditor = data[0]
+	const c4Auditor: C4Auditor = data[0]
 
-	//@TODO: remove hard coded value
-	const auditor: Auditor = {
-		handle: c4Auditor.handle ,
-		avatarURL: c4Auditor.image ,
-		totalFindings: c4Auditor.allFindings ,
-		totalRewards: c4Auditor.rewardsTotal ,
-		availableForHire: c4Auditor.availableForHire ,
-		highRiskFindings: c4Auditor.highRisk ,
-		mediumRiskFindings: c4Auditor.mediumRisk ,
-		lowRiskFindings: c4Auditor.lowRisk ,
-		soloHighRiskFindings:c4Auditor.soloHigh ,
-		gasOptzFindings: c4Auditor.gasOptz ,
-		specialities: ["defi", "nft"],
-		trustScore: Number(c4Auditor.allFindings / 10) || 0 ,
+	if (c4Auditor === undefined) {
+		return {} as C4Auditor
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
+	//@TODO: remove hard coded value
+	const auditor: C4Auditor = {
+		handle: c4Auditor.handle ,
+		avatarURL: c4Auditor.avatarURL ,
+		totalFindings: c4Auditor.totalFindings ,
+		totalRewards: c4Auditor.totalRewards ,
+		availableForHire: c4Auditor.availableForHire ,
+		highRiskFindings: c4Auditor.highRiskFindings ,
+		mediumRiskFindings: c4Auditor.mediumRiskFindings ,
+		lowRiskFindings: c4Auditor.lowRiskFindings ,
+		soloHighRiskFindings:c4Auditor.soloHighRiskFindings ,
+		gasOptzFindings: c4Auditor.gasOptzFindings ,
+	}
+
 	return auditor
 }
 
-async function getManyC4Auditors(_params: {specialities: string[], trustScore: string, count?
-	: number}): Promise<Auditor[]> {
+async function getManyC4Auditors(): Promise<C4Auditor[]> {
 	const url = `https://code4rena.com/api/functions/leaderboard`
 	const res = await fetch(url)
 
@@ -87,27 +74,21 @@ async function getManyC4Auditors(_params: {specialities: string[], trustScore: s
 	}
 
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- JSON.parse is safe
 	const c4Auditors: C4Auditor[] = JSON.parse(result)
 
-	let payload: Auditor[] = []
+	let payload: C4Auditor[] = []
 
 	 payload = (c4Auditors).map((a) => {
-		const auditor: Auditor = {
+		const auditor: C4Auditor = {
 			handle: a.handle,
-			avatarURL: a.image,
-			totalFindings: a.allFindings,
-			totalRewards: a.rewardsTotal, 
-			trustScore: Number(a.allFindings / 10) || 0 ,
-			specialities: ["defi", "nft"],
-
+			avatarURL: a.avatarURL,
+			totalFindings: a.totalFindings,
+			totalRewards: a.totalRewards, 
 		}
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 		return auditor
 	}) 
 
 	//sort trust score
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- JSON.parse is safe
 	payload = payload.sort((a, b) => b.totalFindings - a.totalFindings)
 
 
@@ -115,7 +96,6 @@ async function getManyC4Auditors(_params: {specialities: string[], trustScore: s
 
 	// limit results to be sent
 	 payload = payload.slice(0, 40)
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON.parse is safe
 	return payload
 
 }

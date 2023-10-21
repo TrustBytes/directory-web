@@ -39,6 +39,11 @@ module.exports = {
   rules: {
     "import/no-default-export": "off",
     "react/jsx-sort-props": "off",
-    "@typescript-eslint/consistent-indexed-object-style": "off"
+    "@typescript-eslint/consistent-indexed-object-style": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
   },
 };

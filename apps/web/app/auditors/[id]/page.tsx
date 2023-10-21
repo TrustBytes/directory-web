@@ -1,8 +1,9 @@
 
 import React from 'react'
 import Image from 'next/image';
-import { getC4Auditor, getManyC4Auditors } from '../../_utils/auditors';
-import type { Auditor } from '../../_types/auditor';
+import { getC4Auditor } from '../../_utils/auditors';
+import type {  TrustbytesAuditor } from '../../_types/auditor';
+import { getTrustbytesAuditors,getTrustbytesAuditor } from '../../_lib/trustbytes';
 
 
 interface AuditorPageParams {
@@ -19,10 +20,10 @@ const CSS_SECTION: ClassName = 'my-4  overflow-x-auto '
 const CSS_AUDITOR_OVERVIEW_ITEM: ClassName = 'p-4 text-lg border cursor-pointer hover:brightness-90'
 
 export async function generateStaticParams(): Promise<{ id: string }[]> {
-  const manyC4Auditors = await getManyC4Auditors({ specialities: [], trustScore: "0"})
-  const auditorProfiles = manyC4Auditors.map((auditor: Auditor) => {
+  const trustbytesAuditors = await getTrustbytesAuditors()
+  const auditorProfiles = trustbytesAuditors.map((a: TrustbytesAuditor) => {
     return {
-      id: auditor.handle,
+      id: a.pageID,
     }
   })
   return auditorProfiles
@@ -32,12 +33,15 @@ export async function generateStaticParams(): Promise<{ id: string }[]> {
 
 const page = async ({ params }: { params: AuditorPageParams }): Promise<JSX.Element> => {
   const { id } = params;
-  const auditor: Auditor = await getC4Auditor(id) as Auditor
+  // const auditor: Auditor = await getC4Auditor(id) as Auditor
+  let trustbytesAuditor = {} as TrustbytesAuditor
+    trustbytesAuditor = await getTrustbytesAuditor(id)
+  const c4Auditor = await getC4Auditor(params.id)
   return (
     <div className='m-8 flex flex-col md:flex-row  gap-8'>
       <div className="w-96">
       <div className=" relative aspect-square rounded-3xl overflow-hidden">
-        <Image src={auditor.avatarURL || "/"} fill alt="avatar" className="object-cover" />
+        <Image src={trustbytesAuditor.avatarURL || c4Auditor.avatarURL || "/anon.png"} fill alt="avatar" className="object-cover" />
       </div>
       </div>
 
@@ -46,13 +50,22 @@ const page = async ({ params }: { params: AuditorPageParams }): Promise<JSX.Elem
         <section className={CSS_SECTION}>
           <h1 className={CSS_SECTION_LABEL}>Auditor Preferences</h1>
           <ul className="flex flex-wrap gap-4 my-4">
+            {Object.entries(trustbytesAuditor).map(([key, value]) => {
+              return (
+                <div key={key} className={CSS_AUDITOR_OVERVIEW_ITEM}>
+                <span>{key}: </span>
+                <span>{String(value)}</span>
+              </div>
+              )
+
+            })}
           </ul>
         </section>
 
         <section className={CSS_SECTION}>
-          <h1 className={CSS_SECTION_LABEL}>Known Data</h1>
+          <h1 className={CSS_SECTION_LABEL}>External Data</h1>
           <ul className="flex flex-wrap gap-4 my-4">
-            {Object.entries(auditor).map(([key, value]) => {
+            {Object.entries(c4Auditor).map(([key, value]) => {
               if (!value) return null;
               return (
                 <div key={key} className={CSS_AUDITOR_OVERVIEW_ITEM}>
@@ -63,7 +76,6 @@ const page = async ({ params }: { params: AuditorPageParams }): Promise<JSX.Elem
             })}
           </ul>
         </section>
-
       </div>
     </div>
   )

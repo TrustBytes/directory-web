@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .colors__auditor-standard {
+    @apply bg-gradient-to-bl from-slate-900 via-darker to-darker;
+  }
+
+  .colors__auditor-premium {
+    @apply bg-gradient-to-bl from-slate-900 via-dark  to-accent ;
+  }
+}
+
