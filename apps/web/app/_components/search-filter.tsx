@@ -36,8 +36,8 @@ function SearchFilter(props: SearchProps): JSX.Element {
   function filterAuditors(auditors: TrustbytesAuditor[]): TrustbytesAuditor[] {
     return auditors.filter((a) => {
       const hasTrustScore = a.trustScore >= inputValueTrustScore
-   
-      return hasTrustScore 
+
+      return hasTrustScore
     })
   }
 
@@ -86,8 +86,7 @@ function SearchFilter(props: SearchProps): JSX.Element {
         <datalist id="list-auditors">
           {props.auditors.map((a: TrustbytesAuditor) => {
             return (
-
-              <option key={a.address} value={a.address} />
+              <option key={a.address || a.C4ID} value={a.address || a.C4ID} />
             )
           })}
         </ datalist>
