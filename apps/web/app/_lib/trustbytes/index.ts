@@ -37,6 +37,12 @@ async function getTrustbytesAuditors(): Promise<TrustbytesAuditor[]> {
 		trustbytesAuditors.push(c4Profile);
 	})
 
+	// trustbytesAuditors = trustbytesAuditors.sort((a, b) => {
+	//
+	// })
+
+
+
 
 	return trustbytesAuditors;
 }
