@@ -133,12 +133,6 @@ function SearchFilter(props: SearchProps): JSX.Element {
       <div className="flex gap-8 mt-24  flex-wrap ">
         {(filteredAuditors).map((a: TrustbytesAuditor) => {
 
-          for (const speciality of inputValueSpecialities) {
-            if (!a.competencies.includes(speciality)) {
-              return null
-            }
-          }
-
           return (
             <Link key={a.pageID} className="h-64 flex flex-col relative hover:brightness-125 bg-transparent  hover:translate-x-1 hover:-translate-y-1 cursor-pointer  duration-200 ease-out  md:mx-auto w-full lg:w-fit" href={`/auditors/${a.pageID}`}>
               <div className="w-full flex justify-between">
