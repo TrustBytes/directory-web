@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^1.1.1",
-    "@tableland/sdk": "^4.5.3-dev.0",
     "axios": "^1.5.1",
     "cheerio": "^1.0.0-rc.12",
     "encoding": "^0.1.13",
@@ -20,7 +19,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "stream-to-string": "^1.2.1",
-    "ui": "*",
     "wagmi": "^1.4.3"
   },
   "devDependencies": {

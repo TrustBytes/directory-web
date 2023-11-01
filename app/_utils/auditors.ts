@@ -10,9 +10,6 @@ const getC4Auditor = async (handle: string): Promise<C4Auditor> => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		next: {
-			revalidate: 300 
-		}
 	})
 
 	if (!res.body) {
