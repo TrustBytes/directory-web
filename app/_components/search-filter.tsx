@@ -61,7 +61,7 @@ function SearchFilter(props: SearchProps): JSX.Element {
   }
 
   function onSpecialitiesChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    e.preventDefault()
+    // e.preventDefault()
     const speciality = e.target.value as Speciality
     const checked = e.target.checked
     if (checked) {
@@ -97,7 +97,7 @@ function SearchFilter(props: SearchProps): JSX.Element {
               return (
                 <div key={speciality} className="flex space-x-2 text-lg tracking-wide cursor-pointer">
                   <label htmlFor={`checkbox_${speciality}`} className="select-none">{speciality}</label>
-                  <input type="checkbox" name="specialities" id={`checkbox_${speciality}`} defaultChecked={false} value={speciality} onChange={onSpecialitiesChange} checked={inputValueSpecialities.includes(speciality)} />
+                  <input type="checkbox" name="specialities" id={`checkbox_${speciality}`}  value={speciality} onChange={onSpecialitiesChange} checked={inputValueSpecialities.includes(speciality)} />
                 </div>
               )
             })}
@@ -128,10 +128,12 @@ function SearchFilter(props: SearchProps): JSX.Element {
           <span className="">unregistered</span>
         </div>
       </section>
-      <h1 className="uppercase">showing <span className="text-2xl">{filteredAuditors.length}</span> results </h1>
       <div className="flex gap-8 mt-24  flex-wrap ">
         {(filteredAuditors).map((a: TrustbytesAuditor) => {
 
+          if (!Boolean(inputValueSpecialities.every(value => a.competencies.includes(value)))) {
+            return null
+          }
           return (
             <Link key={a.pageID} className="h-64 flex flex-col relative hover:brightness-125 bg-transparent  hover:translate-x-1 hover:-translate-y-1 cursor-pointer  duration-200 ease-out  md:mx-auto w-full lg:w-fit" href={`/auditors/${a.pageID}`}>
               <div className="w-full flex justify-between">
