@@ -10,5 +10,9 @@
   .colors__auditor-premium {
     @apply bg-gradient-to-bl from-slate-900 via-dark  to-accent ;
   }
+
+  .interactive {
+    @apply cursor-pointer hover:brightness-150;
+  }
 }
 
