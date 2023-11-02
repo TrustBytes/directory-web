@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useContractWrite } from 'wagmi';
+import { useAccount, useContractWrite } from 'wagmi';
 import Providers from '../_components/providers';
 import registryArtifact from '../_data/abi/AuditorRegistry.json';
 import config from '../_data/config';
@@ -21,7 +21,10 @@ interface RegisterState {
 function Register(): JSX.Element {
   const [state, setState] = useState<RegisterState>(INITIAL_STATE)
 
-  const { write: registerProfile,  isLoading } = useContractWrite({
+  const { isConnected } = useAccount()
+
+
+  const { write: registerProfile, isLoading } = useContractWrite({
     address: config.mumbai.CONTRACT_ADDRESS_REGISTRY as `0x${string}`,
     abi: registryArtifact.abi,
     functionName: 'insertIntoTable',
@@ -33,9 +36,9 @@ function Register(): JSX.Element {
     onError: (e) => {
       // eslint-disable-next-line no-alert -- Dev mode alert
       window.alert(`Error registering profile: ${e.message}`)
-  }
+    }
 
-})
+  })
 
   function onFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
@@ -65,25 +68,36 @@ function Register(): JSX.Element {
 
           <ConnectButton />
         </div>
-        <section className="md:m-16 my-8">
-          <form  className="flex flex-wrap gap-8" onSubmit={onFormSubmit}>
-            <div>
-              <input type="text" name="name" id="name" placeholder="1. name" className="bg-transparent border-b border-white text-xl p-4" value={state.name} onChange={onInputChangeName}/>
-            </div>
-            <div>
-              <input type="text" name="bio" id="bio" placeholder="2. bio" className="bg-transparent border-b border-white text-xl p-4" value={state.bio} onChange={onInputChangeBio}/>
-            </div>
-            <div>
-              <input type="text" name="competencies" id="competencies" placeholder="3. competencies" className="bg-transparent border-b border-white text-xl p-4" onChange={onInputChangeCompetencies}/>
-            </div>
-            <button type="submit" className="flex p-2 px-8 text-xs border items-center justify-center" disabled={isLoading}>Register</button>
+        {isConnected &&
+          (
+            <React.Fragment>
 
 
 
-          </form>
 
-        </section>
-        <pre className="p-4 bg-dark tracking-wide font-thin whitespace-pre" id="json">{JSON.stringify(state)}</pre>
+              <section className="md:m-16 my-8">
+                <form className="flex flex-wrap gap-8" onSubmit={onFormSubmit}>
+                  <div>
+                    <input type="text" name="name" id="name" placeholder="1. name" className="bg-transparent border-b border-white text-xl p-4" value={state.name} onChange={onInputChangeName} />
+                  </div>
+                  <div>
+                    <input type="text" name="bio" id="bio" placeholder="2. bio" className="bg-transparent border-b border-white text-xl p-4" value={state.bio} onChange={onInputChangeBio} />
+                  </div>
+                  <div>
+                    <input type="text" name="competencies" id="competencies" placeholder="3. competencies" className="bg-transparent border-b border-white text-xl p-4" onChange={onInputChangeCompetencies} />
+                  </div>
+                  <button type="submit" className="flex p-2 px-8 text-xs border items-center justify-center" disabled={isLoading}>Register</button>
+
+
+
+                </form>
+
+              </section>
+              <pre className="p-4 bg-dark tracking-wide font-thin whitespace-pre" id="json">{JSON.stringify(state)}</pre>
+            </React.Fragment>
+          )
+
+        }
       </div>
     </ Providers>
   )
